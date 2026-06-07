@@ -5,12 +5,9 @@ USER root
 RUN sed -i 's/^Listen 80$/Listen 8080/' /etc/apache2/ports.conf && \
     sed -i 's/<VirtualHost \*:80>/<VirtualHost *:8080>/' /etc/apache2/sites-available/000-default.conf && \
     sed -i 's/<VirtualHost \*:80>/<VirtualHost *:8080>/' /etc/apache2/sites-enabled/000-default.conf && \
-    sed -i 's#${APACHE_LOG_DIR}/access.log#/proc/self/fd/1#g' /etc/apache2/sites-available/000-default.conf && \
-    sed -i 's#${APACHE_LOG_DIR}/error.log#/proc/self/fd/2#g' /etc/apache2/sites-available/000-default.conf && \
-    sed -i 's#${APACHE_LOG_DIR}/access.log#/proc/self/fd/1#g' /etc/apache2/sites-enabled/000-default.conf && \
-    sed -i 's#${APACHE_LOG_DIR}/error.log#/proc/self/fd/2#g' /etc/apache2/sites-enabled/000-default.conf && \
-    sed -i 's#/var/log/apache2/other_vhosts_access.log#/proc/self/fd/1#g' /etc/apache2/conf-available/other-vhosts-access-log.conf && \
-    sed -i 's#/var/log/apache2/other_vhosts_access.log#/proc/self/fd/1#g' /etc/apache2/conf-enabled/other-vhosts-access-log.conf && \
+    rm -f /etc/apache2/conf-enabled/other-vhosts-access-log.conf && \
+    ln -sf /proc/self/fd/1 /var/log/apache2/access.log && \
+    ln -sf /proc/self/fd/2 /var/log/apache2/error.log && \
     chmod -R g=u /var/log/apache2 /var/run/apache2 /var/lock/apache2 /var/www/html
 
 EXPOSE 8080
