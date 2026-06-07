@@ -4,4 +4,6 @@ USER root
 
 RUN chmod -R g=u /var/log/apache2 /var/run/apache2 /var/lock/apache2 /var/www/html || true
 
+RUN echo "=== PORTS ===" && cat /etc/apache2/ports.conf
+
 EXPOSE 8080
