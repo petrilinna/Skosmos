@@ -1,0 +1,8 @@
+FROM quay.io/natlibfi/skosmos:latest
+
+USER root
+
+RUN sed -i 's/Listen 80/Listen 8080/g' /etc/apache2/ports.conf || true && \
+    find /etc/apache2 -type f -name "*.conf" -exec sed -i 's/:80/:8080/g' {} \; || true
+
+EXPOSE 8080
