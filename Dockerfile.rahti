@@ -2,6 +2,12 @@ FROM quay.io/natlibfi/skosmos:latest
 
 USER root
 
+RUN find /etc -type f \( -name "*.conf" -o -name "*.ini" \) | sort
+
+RUN grep -R "Listen" /etc 2>/dev/null || true
+
+RUN grep -R ":80" /etc 2>/dev/null || true
+
 RUN chmod -R g=u /var/log/apache2 /var/run/apache2 /var/lock/apache2 /var/www/html || true
 
 EXPOSE 8080
