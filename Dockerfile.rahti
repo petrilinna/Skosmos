@@ -10,4 +10,6 @@ RUN sed -i 's/^Listen 80$/Listen 8080/' /etc/apache2/ports.conf && \
     ln -sf /proc/self/fd/2 /var/log/apache2/error.log && \
     chmod -R g=u /var/log/apache2 /var/run/apache2 /var/lock/apache2 /var/www/html
 
+COPY custom-templates /var/www/html/custom-templates
+
 EXPOSE 8080
